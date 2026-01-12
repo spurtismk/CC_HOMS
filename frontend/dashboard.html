@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
     <div class="dashboard-container">
         <!-- Sidebar -->
@@ -18,8 +20,10 @@
                 Welcome, <span id="user-display-name">User</span>
             </div>
             <ul class="nav-links">
-                <li><a href="#" data-target="dashboard" class="active"><i class="fas fa-chart-line"></i> Dashboard</a></li>
-                <li id="nav-users" style="display: none;"><a href="#" data-target="users"><i class="fas fa-users-cog"></i> Users (Admin)</a></li>
+                <li><a href="#" data-target="dashboard" class="active"><i class="fas fa-chart-line"></i> Dashboard</a>
+                </li>
+                <li id="nav-users" style="display: none;"><a href="#" data-target="users"><i
+                            class="fas fa-users-cog"></i> Users (Admin)</a></li>
                 <li id="nav-staff"><a href="#" data-target="staff"><i class="fas fa-user-md"></i> Staff</a></li>
                 <li><a href="#" data-target="patients"><i class="fas fa-procedures"></i> Patients</a></li>
                 <li><a href="#" data-target="appointments"><i class="fas fa-calendar-check"></i> Appointments</a></li>
@@ -35,40 +39,47 @@
         <main class="main-content">
             <!-- Dashboard Home -->
             <section id="dashboard" class="page-section">
-                <div class="card-header" style="background: transparent; border: none; padding-left: 0; padding-top: 0;">
+                <div class="card-header"
+                    style="background: transparent; border: none; padding-left: 0; padding-top: 0;">
                     <h3>Hospital Overview</h3>
                 </div>
-                
+
                 <!-- Expanded Stats Grid -->
                 <div class="stats-grid">
                     <div class="stat-card">
                         <div class="stat-number" id="sc-patients">0</div>
                         <div class="stat-label">Total Patients</div>
-                        <i class="fas fa-user-injured" style="position: absolute; right: 20px; top: 20px; opacity: 0.1; font-size: 3rem;"></i>
+                        <i class="fas fa-user-injured"
+                            style="position: absolute; right: 20px; top: 20px; opacity: 0.1; font-size: 3rem;"></i>
                     </div>
                     <div class="stat-card">
                         <div class="stat-number" id="sc-appointments">0</div>
                         <div class="stat-label">Appointments Today</div>
-                        <i class="fas fa-calendar-alt" style="position: absolute; right: 20px; top: 20px; opacity: 0.1; font-size: 3rem;"></i>
+                        <i class="fas fa-calendar-alt"
+                            style="position: absolute; right: 20px; top: 20px; opacity: 0.1; font-size: 3rem;"></i>
                     </div>
                     <div class="stat-card">
                         <div class="stat-number" id="sc-staff">0</div>
                         <div class="stat-label">Staff On Duty</div>
-                        <i class="fas fa-user-md" style="position: absolute; right: 20px; top: 20px; opacity: 0.1; font-size: 3rem;"></i>
+                        <i class="fas fa-user-md"
+                            style="position: absolute; right: 20px; top: 20px; opacity: 0.1; font-size: 3rem;"></i>
                     </div>
-                    <div class="stat-card">
+                    /*<div class="stat-card">
                         <div class="stat-number" id="sc-equipment">0</div>
                         <div class="stat-label">Equipment Available</div>
-                        <i class="fas fa-microscope" style="position: absolute; right: 20px; top: 20px; opacity: 0.1; font-size: 3rem;"></i>
-                    </div>
+                        <i class="fas fa-microscope"
+                            style="position: absolute; right: 20px; top: 20px; opacity: 0.1; font-size: 3rem;"></i>
+                    </div>*/
                 </div>
 
-                <div class="dashboard-widgets" style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; margin-top: 1rem;">
+                <div class="dashboard-widgets"
+                    style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; margin-top: 1rem;">
                     <!-- Recent Activity Widget -->
                     <div class="card">
                         <div class="card-header">
                             <h3><i class="fas fa-history"></i> Recent Appointments</h3>
-                            <a href="#" onclick="document.querySelector('a[data-target=appointments]').click()" style="font-size: 0.9rem; color: var(--primary-color);">View All</a>
+                            <a href="#" onclick="document.querySelector('a[data-target=appointments]').click()"
+                                style="font-size: 0.9rem; color: var(--primary-color);">View All</a>
                         </div>
                         <div class="card-body" style="padding: 0;">
                             <div class="table-responsive">
@@ -82,7 +93,9 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr><td colspan="4" style="text-align:center; color: #999;">Loading...</td></tr>
+                                        <tr>
+                                            <td colspan="4" style="text-align:center; color: #999;">Loading...</td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -95,15 +108,18 @@
                             <h3><i class="fas fa-bolt"></i> Quick Actions</h3>
                         </div>
                         <div class="card-body" style="display: grid; gap: 1rem;">
-                            <button class="btn" onclick="openModal('patientModal')" style="width: 100%; justify-content: flex-start; background: var(--bg-body); color: var(--text-dark); border: 1px solid var(--border-color);">
+                            <button class="btn" onclick="openModal('patientModal')"
+                                style="width: 100%; justify-content: flex-start; background: var(--bg-body); color: var(--text-dark); border: 1px solid var(--border-color);">
                                 <i class="fas fa-user-plus" style="color: var(--primary-color);"></i> Register Patient
                             </button>
-                            <button class="btn" onclick="openModal('appointmentModal')" style="width: 100%; justify-content: flex-start; background: var(--bg-body); color: var(--text-dark); border: 1px solid var(--border-color);">
+                            <button class="btn" onclick="openModal('appointmentModal')"
+                                style="width: 100%; justify-content: flex-start; background: var(--bg-body); color: var(--text-dark); border: 1px solid var(--border-color);">
                                 <i class="fas fa-calendar-plus" style="color: var(--success);"></i> New Appointment
                             </button>
-                            <button class="btn" onclick="openModal('staffModal')" style="width: 100%; justify-content: flex-start; background: var(--bg-body); color: var(--text-dark); border: 1px solid var(--border-color);">
+                            /* <button class="btn" onclick="openModal('staffModal')"
+                                style="width: 100%; justify-content: flex-start; background: var(--bg-body); color: var(--text-dark); border: 1px solid var(--border-color);">
                                 <i class="fas fa-user-nurse" style="color: var(--warning);"></i> Add Staff
-                            </button>
+                            </button> */
                         </div>
                     </div>
                 </div>
@@ -114,7 +130,8 @@
                 <div class="card">
                     <div class="card-header">
                         <h3>User Management</h3>
-                        <button class="btn" onclick="openModal('userModal')"><i class="fas fa-plus"></i> Add User</button>
+                        <button class="btn" onclick="openModal('userModal')"><i class="fas fa-plus"></i> Add
+                            User</button>
                     </div>
                     <div class="table-responsive">
                         <table id="usersTable">
@@ -136,7 +153,8 @@
                 <div class="card">
                     <div class="card-header">
                         <h3>Staff Management</h3>
-                        <button class="btn" onclick="openModal('staffModal')"><i class="fas fa-plus"></i> Add Staff</button>
+                        <button class="btn" onclick="openModal('staffModal')"><i class="fas fa-plus"></i> Add
+                            Staff</button>
                     </div>
                     <div class="table-responsive">
                         <table id="staffTable">
@@ -157,10 +175,11 @@
 
             <!-- Patients Section -->
             <section id="patients" class="page-section" style="display: none;">
-                 <div class="card">
+                <div class="card">
                     <div class="card-header">
                         <h3>Patient Management</h3>
-                        <button class="btn" onclick="openModal('patientModal')"><i class="fas fa-plus"></i> Register Patient</button>
+                        <button class="btn" onclick="openModal('patientModal')"><i class="fas fa-plus"></i> Register
+                            Patient</button>
                     </div>
                     <div class="table-responsive">
                         <table id="patientsTable">
@@ -179,76 +198,79 @@
                 </div>
             </section>
 
-             <!-- Appointments Section -->
-             <section id="appointments" class="page-section" style="display: none;">
+            <!-- Appointments Section -->
+            <section id="appointments" class="page-section" style="display: none;">
                 <div class="card">
-                   <div class="card-header">
-                       <h3>Appointment Management</h3>
-                       <button class="btn" onclick="openModal('appointmentModal')"><i class="fas fa-plus"></i> Schedule Appointment</button>
-                   </div>
-                   <div class="table-responsive">
-                       <table id="appointmentsTable">
-                           <thead>
-                               <tr>
-                                   <th>Patient</th>
-                                   <th>Doctor</th>
-                                   <th>Date & Time</th>
-                                   <th>Status</th>
-                                   <th>Actions</th>
-                               </tr>
-                           </thead>
-                           <tbody></tbody>
-                       </table>
-                   </div>
-               </div>
-           </section>
+                    <div class="card-header">
+                        <h3>Appointment Management</h3>
+                        <button class="btn" onclick="openModal('appointmentModal')"><i class="fas fa-plus"></i> Schedule
+                            Appointment</button>
+                    </div>
+                    <div class="table-responsive">
+                        <table id="appointmentsTable">
+                            <thead>
+                                <tr>
+                                    <th>Patient</th>
+                                    <th>Doctor</th>
+                                    <th>Date & Time</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
 
             <!-- Attendance Section -->
             <section id="attendance" class="page-section" style="display: none;">
                 <div class="card">
-                   <div class="card-header">
-                       <h3>Attendance Logs</h3>
-                       <button class="btn" onclick="openModal('attendanceModal')"><i class="fas fa-plus"></i> Log Attendance</button>
-                   </div>
-                   <div class="table-responsive">
-                       <table id="attendanceTable">
-                           <thead>
-                               <tr>
-                                   <th>Staff Member</th>
-                                   <th>Date</th>
-                                   <th>Shift</th>
-                                   <th>Status</th>
-                                   <th>Actions</th>
-                               </tr>
-                           </thead>
-                           <tbody></tbody>
-                       </table>
-                   </div>
-               </div>
-           </section>
+                    <div class="card-header">
+                        <h3>Attendance Logs</h3>
+                        <button class="btn" onclick="openModal('attendanceModal')"><i class="fas fa-plus"></i> Log
+                            Attendance</button>
+                    </div>
+                    <div class="table-responsive">
+                        <table id="attendanceTable">
+                            <thead>
+                                <tr>
+                                    <th>Staff Member</th>
+                                    <th>Date</th>
+                                    <th>Shift</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
 
-           <!-- Equipment Section -->
-           <section id="equipment" class="page-section" style="display: none;">
-            <div class="card">
-               <div class="card-header">
-                   <h3>Equipment Availability</h3>
-                   <button class="btn" onclick="openModal('equipmentModal')"><i class="fas fa-plus"></i> Add Equipment</button>
-               </div>
-               <div class="table-responsive">
-                   <table id="equipmentTable">
-                       <thead>
-                           <tr>
-                               <th>Name</th>
-                               <th>Department</th>
-                               <th>Status</th>
-                               <th>Actions</th>
-                           </tr>
-                       </thead>
-                       <tbody></tbody>
-                   </table>
-               </div>
-           </div>
-       </section>
+            <!-- Equipment Section -->
+            <section id="equipment" class="page-section" style="display: none;">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Equipment Availability</h3>
+                        <button class="btn" onclick="openModal('equipmentModal')"><i class="fas fa-plus"></i> Add
+                            Equipment</button>
+                    </div>
+                    <div class="table-responsive">
+                        <table id="equipmentTable">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Department</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
 
         </main>
     </div>
@@ -267,7 +289,8 @@
                 </div>
                 <div class="form-group">
                     <label>Password</label>
-                    <input type="password" id="userPassword" class="form-control" placeholder="Leave blank to keep current">
+                    <input type="password" id="userPassword" class="form-control"
+                        placeholder="Leave blank to keep current">
                 </div>
                 <div class="form-group">
                     <label>Role</label>
@@ -346,7 +369,7 @@
                     <label>Emergency Contact</label>
                     <input type="text" id="patientEmergency" class="form-control" required>
                 </div>
-                 <div class="form-group">
+                <div class="form-group">
                     <label>Medical History (Brief)</label>
                     <textarea id="patientHistory" class="form-control"></textarea>
                 </div>
@@ -365,11 +388,11 @@
                 <div class="form-group">
                     <label>Patient</label>
                     <!-- Populate via JS -->
-                    <select id="appPatient" class="form-control" required></select> 
+                    <select id="appPatient" class="form-control" required></select>
                 </div>
                 <div class="form-group">
                     <label>Doctor</label>
-                     <!-- Populate via JS -->
+                    <!-- Populate via JS -->
                     <select id="appDoctor" class="form-control" required></select>
                 </div>
                 <div class="form-group">
@@ -380,7 +403,7 @@
                     <label>Time</label>
                     <input type="time" id="appTime" class="form-control" required>
                 </div>
-                 <div class="form-group">
+                <div class="form-group">
                     <label>Status</label>
                     <select id="appStatus" class="form-control">
                         <option value="Scheduled">Scheduled</option>
@@ -402,14 +425,14 @@
                 <input type="hidden" id="attendanceId">
                 <div class="form-group">
                     <label>Staff Member</label>
-                     <!-- Populate via JS -->
+                    <!-- Populate via JS -->
                     <select id="attStaff" class="form-control" required></select>
                 </div>
                 <div class="form-group">
                     <label>Date</label>
                     <input type="date" id="attDate" class="form-control" required>
                 </div>
-                 <div class="form-group">
+                <div class="form-group">
                     <label>Shift</label>
                     <select id="attShift" class="form-control">
                         <option value="Morning">Morning</option>
@@ -417,12 +440,12 @@
                         <option value="Night">Night</option>
                     </select>
                 </div>
-                 <div class="form-group">
+                <div class="form-group">
                     <label>Status</label>
                     <select id="attStatus" class="form-control">
                         <option value="Present">Present</option>
                         <option value="Absent">Absent</option>
-                         <option value="Leave">Leave</option>
+                        <option value="Leave">Leave</option>
                     </select>
                 </div>
                 <button type="submit" class="btn">Save</button>
@@ -445,7 +468,7 @@
                     <label>Department</label>
                     <input type="text" id="eqDept" class="form-control" required>
                 </div>
-                 <div class="form-group">
+                <div class="form-group">
                     <label>Status</label>
                     <select id="eqStatus" class="form-control">
                         <option value="Available">Available</option>
@@ -461,4 +484,5 @@
     <script src="js/api.js"></script>
     <script src="js/dashboard.js"></script>
 </body>
+
 </html>
