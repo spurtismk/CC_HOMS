@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - HOMS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                HOMS <i class="fas fa-hospital-alt"></i>
+            </div>
+            <div style="text-align: center; padding: 10px; font-size: 0.9em; color: #666;">
+                Welcome, <span id="user-display-name">User</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#" data-target="dashboard" class="active"><i class="fas fa-chart-line"></i> Dashboard</a></li>
+                <li id="nav-users" style="display: none;"><a href="#" data-target="users"><i class="fas fa-users-cog"></i> Users (Admin)</a></li>
+                <li id="nav-staff"><a href="#" data-target="staff"><i class="fas fa-user-md"></i> Staff</a></li>
+                <li><a href="#" data-target="patients"><i class="fas fa-procedures"></i> Patients</a></li>
+                <li><a href="#" data-target="appointments"><i class="fas fa-calendar-check"></i> Appointments</a></li>
+                <li><a href="#" data-target="attendance"><i class="fas fa-clock"></i> Attendance</a></li>
+                <li><a href="#" data-target="equipment"><i class="fas fa-stethoscope"></i> Equipment</a></li>
+            </ul>
+            <div class="sidebar-footer">
+                <button id="logoutBtn" class="btn btn-secondary"><i class="fas fa-sign-out-alt"></i> Logout</button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Dashboard Home -->
+            <section id="dashboard" class="page-section">
+                <div class="card-header" style="background: transparent; border: none; padding-left: 0; padding-top: 0;">
+                    <h3>Hospital Overview</h3>
+                </div>
+                
+                <!-- Expanded Stats Grid -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number" id="sc-patients">0</div>
+                        <div class="stat-label">Total Patients</div>
+                        <i class="fas fa-user-injured" style="position: absolute; right: 20px; top: 20px; opacity: 0.1; font-size: 3rem;"></i>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="sc-appointments">0</div>
+                        <div class="stat-label">Appointments Today</div>
+                        <i class="fas fa-calendar-alt" style="position: absolute; right: 20px; top: 20px; opacity: 0.1; font-size: 3rem;"></i>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="sc-staff">0</div>
+                        <div class="stat-label">Staff On Duty</div>
+                        <i class="fas fa-user-md" style="position: absolute; right: 20px; top: 20px; opacity: 0.1; font-size: 3rem;"></i>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="sc-equipment">0</div>
+                        <div class="stat-label">Equipment Available</div>
+                        <i class="fas fa-microscope" style="position: absolute; right: 20px; top: 20px; opacity: 0.1; font-size: 3rem;"></i>
+                    </div>
+                </div>
+
+                <div class="dashboard-widgets" style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; margin-top: 1rem;">
+                    <!-- Recent Activity Widget -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-history"></i> Recent Appointments</h3>
+                            <a href="#" onclick="document.querySelector('a[data-target=appointments]').click()" style="font-size: 0.9rem; color: var(--primary-color);">View All</a>
+                        </div>
+                        <div class="card-body" style="padding: 0;">
+                            <div class="table-responsive">
+                                <table id="recentTable" style="margin-bottom: 0;">
+                                    <thead>
+                                        <tr>
+                                            <th>Patient</th>
+                                            <th>Doctor</th>
+                                            <th>Time</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td colspan="4" style="text-align:center; color: #999;">Loading...</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions Widget -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-bolt"></i> Quick Actions</h3>
+                        </div>
+                        <div class="card-body" style="display: grid; gap: 1rem;">
+                            <button class="btn" onclick="openModal('patientModal')" style="width: 100%; justify-content: flex-start; background: var(--bg-body); color: var(--text-dark); border: 1px solid var(--border-color);">
+                                <i class="fas fa-user-plus" style="color: var(--primary-color);"></i> Register Patient
+                            </button>
+                            <button class="btn" onclick="openModal('appointmentModal')" style="width: 100%; justify-content: flex-start; background: var(--bg-body); color: var(--text-dark); border: 1px solid var(--border-color);">
+                                <i class="fas fa-calendar-plus" style="color: var(--success);"></i> New Appointment
+                            </button>
+                            <button class="btn" onclick="openModal('staffModal')" style="width: 100%; justify-content: flex-start; background: var(--bg-body); color: var(--text-dark); border: 1px solid var(--border-color);">
+                                <i class="fas fa-user-nurse" style="color: var(--warning);"></i> Add Staff
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Users Section -->
+            <section id="users" class="page-section" style="display: none;">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>User Management</h3>
+                        <button class="btn" onclick="openModal('userModal')"><i class="fas fa-plus"></i> Add User</button>
+                    </div>
+                    <div class="table-responsive">
+                        <table id="usersTable">
+                            <thead>
+                                <tr>
+                                    <th>Username</th>
+                                    <th>Role</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Staff Section -->
+            <section id="staff" class="page-section" style="display: none;">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Staff Management</h3>
+                        <button class="btn" onclick="openModal('staffModal')"><i class="fas fa-plus"></i> Add Staff</button>
+                    </div>
+                    <div class="table-responsive">
+                        <table id="staffTable">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Designation</th>
+                                    <th>Department</th>
+                                    <th>Contact</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Patients Section -->
+            <section id="patients" class="page-section" style="display: none;">
+                 <div class="card">
+                    <div class="card-header">
+                        <h3>Patient Management</h3>
+                        <button class="btn" onclick="openModal('patientModal')"><i class="fas fa-plus"></i> Register Patient</button>
+                    </div>
+                    <div class="table-responsive">
+                        <table id="patientsTable">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Age/Gender</th>
+                                    <th>Contact</th>
+                                    <th>Emergency</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+             <!-- Appointments Section -->
+             <section id="appointments" class="page-section" style="display: none;">
+                <div class="card">
+                   <div class="card-header">
+                       <h3>Appointment Management</h3>
+                       <button class="btn" onclick="openModal('appointmentModal')"><i class="fas fa-plus"></i> Schedule Appointment</button>
+                   </div>
+                   <div class="table-responsive">
+                       <table id="appointmentsTable">
+                           <thead>
+                               <tr>
+                                   <th>Patient</th>
+                                   <th>Doctor</th>
+                                   <th>Date & Time</th>
+                                   <th>Status</th>
+                                   <th>Actions</th>
+                               </tr>
+                           </thead>
+                           <tbody></tbody>
+                       </table>
+                   </div>
+               </div>
+           </section>
+
+            <!-- Attendance Section -->
+            <section id="attendance" class="page-section" style="display: none;">
+                <div class="card">
+                   <div class="card-header">
+                       <h3>Attendance Logs</h3>
+                       <button class="btn" onclick="openModal('attendanceModal')"><i class="fas fa-plus"></i> Log Attendance</button>
+                   </div>
+                   <div class="table-responsive">
+                       <table id="attendanceTable">
+                           <thead>
+                               <tr>
+                                   <th>Staff Member</th>
+                                   <th>Date</th>
+                                   <th>Shift</th>
+                                   <th>Status</th>
+                                   <th>Actions</th>
+                               </tr>
+                           </thead>
+                           <tbody></tbody>
+                       </table>
+                   </div>
+               </div>
+           </section>
+
+           <!-- Equipment Section -->
+           <section id="equipment" class="page-section" style="display: none;">
+            <div class="card">
+               <div class="card-header">
+                   <h3>Equipment Availability</h3>
+                   <button class="btn" onclick="openModal('equipmentModal')"><i class="fas fa-plus"></i> Add Equipment</button>
+               </div>
+               <div class="table-responsive">
+                   <table id="equipmentTable">
+                       <thead>
+                           <tr>
+                               <th>Name</th>
+                               <th>Department</th>
+                               <th>Status</th>
+                               <th>Actions</th>
+                           </tr>
+                       </thead>
+                       <tbody></tbody>
+                   </table>
+               </div>
+           </div>
+       </section>
+
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <!-- User Modal -->
+    <div id="userModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('userModal')">&times;</span>
+            <h3 id="userModalTitle">Add User</h3>
+            <form id="userForm">
+                <input type="hidden" id="userId">
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" id="userUsername" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="userPassword" class="form-control" placeholder="Leave blank to keep current">
+                </div>
+                <div class="form-group">
+                    <label>Role</label>
+                    <select id="userRole" class="form-control">
+                        <option value="staff">Staff</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn">Save</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Staff Modal -->
+    <div id="staffModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('staffModal')">&times;</span>
+            <h3 id="staffModalTitle">Add Staff</h3>
+            <form id="staffForm">
+                <input type="hidden" id="staffId">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" id="staffName" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Designation</label>
+                    <select id="staffDesignation" class="form-control">
+                        <option value="Doctor">Doctor</option>
+                        <option value="Nurse">Nurse</option>
+                        <option value="Reception">Reception</option>
+                        <option value="Admin">Admin</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Department</label>
+                    <input type="text" id="staffDepartment" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Contact</label>
+                    <input type="text" id="staffContact" class="form-control" required>
+                </div>
+                <button type="submit" class="btn">Save</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Patient Modal -->
+    <div id="patientModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('patientModal')">&times;</span>
+            <h3 id="patientModalTitle">Register Patient</h3>
+            <form id="patientForm">
+                <input type="hidden" id="patientId">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" id="patientName" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Age</label>
+                    <input type="number" id="patientAge" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Gender</label>
+                    <select id="patientGender" class="form-control">
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Contact</label>
+                    <input type="text" id="patientContact" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Emergency Contact</label>
+                    <input type="text" id="patientEmergency" class="form-control" required>
+                </div>
+                 <div class="form-group">
+                    <label>Medical History (Brief)</label>
+                    <textarea id="patientHistory" class="form-control"></textarea>
+                </div>
+                <button type="submit" class="btn">Save</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Appointment Modal -->
+    <div id="appointmentModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('appointmentModal')">&times;</span>
+            <h3 id="appointmentModalTitle">Schedule Appointment</h3>
+            <form id="appointmentForm">
+                <input type="hidden" id="appointmentId">
+                <div class="form-group">
+                    <label>Patient</label>
+                    <!-- Populate via JS -->
+                    <select id="appPatient" class="form-control" required></select> 
+                </div>
+                <div class="form-group">
+                    <label>Doctor</label>
+                     <!-- Populate via JS -->
+                    <select id="appDoctor" class="form-control" required></select>
+                </div>
+                <div class="form-group">
+                    <label>Date</label>
+                    <input type="date" id="appDate" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Time</label>
+                    <input type="time" id="appTime" class="form-control" required>
+                </div>
+                 <div class="form-group">
+                    <label>Status</label>
+                    <select id="appStatus" class="form-control">
+                        <option value="Scheduled">Scheduled</option>
+                        <option value="Completed">Completed</option>
+                        <option value="Cancelled">Cancelled</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn">Save</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Attendance Modal -->
+    <div id="attendanceModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('attendanceModal')">&times;</span>
+            <h3 id="attendanceModalTitle">Log Attendance</h3>
+            <form id="attendanceForm">
+                <input type="hidden" id="attendanceId">
+                <div class="form-group">
+                    <label>Staff Member</label>
+                     <!-- Populate via JS -->
+                    <select id="attStaff" class="form-control" required></select>
+                </div>
+                <div class="form-group">
+                    <label>Date</label>
+                    <input type="date" id="attDate" class="form-control" required>
+                </div>
+                 <div class="form-group">
+                    <label>Shift</label>
+                    <select id="attShift" class="form-control">
+                        <option value="Morning">Morning</option>
+                        <option value="Evening">Evening</option>
+                        <option value="Night">Night</option>
+                    </select>
+                </div>
+                 <div class="form-group">
+                    <label>Status</label>
+                    <select id="attStatus" class="form-control">
+                        <option value="Present">Present</option>
+                        <option value="Absent">Absent</option>
+                         <option value="Leave">Leave</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn">Save</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Equipment Modal -->
+    <div id="equipmentModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('equipmentModal')">&times;</span>
+            <h3 id="equipmentModalTitle">Add/Update Equipment</h3>
+            <form id="equipmentForm">
+                <input type="hidden" id="equipmentId">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" id="eqName" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Department</label>
+                    <input type="text" id="eqDept" class="form-control" required>
+                </div>
+                 <div class="form-group">
+                    <label>Status</label>
+                    <select id="eqStatus" class="form-control">
+                        <option value="Available">Available</option>
+                        <option value="In Use">In Use</option>
+                        <option value="Maintenance">Maintenance</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn">Save</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

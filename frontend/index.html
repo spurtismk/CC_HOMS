@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Hospital Operations Management System</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="login-box">
+            <h2>HOMS Login</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" class="form-control" required>
+                </div>
+                <button type="submit" class="btn">Login</button>
+                <p id="error-msg" style="color: red; margin-top: 10px; display: none;"></p>
+            </form>
+            <p style="margin-top: 1rem; font-size: 0.8rem; color: #666;">
+                Default Admin: admin / 123456 (You may need to create this via DB seed or API manual call first if not seeded)
+            </p>
+        </div>
+    </div>
+    <script src="js/api.js"></script>
+    <script src="js/login.js"></script>
+</body>
+</html>
